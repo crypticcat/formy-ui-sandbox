@@ -2,12 +2,16 @@ package ru.crypticcat.ui;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.Browser;
 import org.slf4j.Logger;
 import ru.crypticcat.formy.sandbox.pages.*;
+
+import java.lang.reflect.Method;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -45,6 +49,16 @@ public class BaseTest {
         radiobuttonsPage = new RadiobuttonsPage(chromeOptions);
         scrollPage = new ScrollPage(chromeOptions);
         switchWindowPage = new SwitchWindowPage(chromeOptions);
+    }
+
+    @BeforeEach
+    public void logTestStart(Method m) {
+        LOG.info(m.getName() + " starting");
+    }
+
+    @AfterEach
+    public void logTestStop(Method m) {
+        LOG.info(m.getName() + " stopped");
     }
 
     @AfterAll

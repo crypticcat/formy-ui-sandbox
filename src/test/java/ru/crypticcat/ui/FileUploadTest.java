@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
 public class FileUploadTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for File Upload page")
     void performFileUpload() throws IOException {
         LOG.debug("Creating temporal file anf uploading it");

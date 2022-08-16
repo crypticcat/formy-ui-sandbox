@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -18,6 +19,7 @@ public class HomeTest extends BaseTest {
     private static final String FORMY_WELCOME = "Welcome to Formy";
 
     @Test
+    @Disabled
     @DisplayName("Perform basic checks for Home page")
     void performBasicChecks() {
         LOG.debug("Performing basic checks");
@@ -43,6 +45,7 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Perform cookies checks for Home page")
     void performCookiesChecks() {
         LOG.debug("Reading cookies on the page");
@@ -66,6 +69,7 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Perform maximize window checks for Home page")
     void testMaximizeWindow() {
         LOG.debug("Getting window object, its position and size");

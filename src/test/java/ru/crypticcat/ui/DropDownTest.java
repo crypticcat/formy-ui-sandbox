@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
 public class DropDownTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for Drag and Drop page")
     void perfromDropdownChecks() {
         LOG.debug("Opening the dropdown on Dropdown page");

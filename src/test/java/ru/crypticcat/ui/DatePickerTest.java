@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,7 @@ public class DatePickerTest extends BaseTest {
     public LocalDate today = LocalDate.now();
 
     @Test
+    @Disabled
     @DisplayName("Perform checks for Datepicker page")
     void performDatePickerChecks() {
         LOG.debug("Verifying the placeholder is displayed in the date picker field");

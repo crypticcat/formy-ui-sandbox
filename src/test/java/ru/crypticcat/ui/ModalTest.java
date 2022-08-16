@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.MODAL_ENDPOINT;
 
 public class ModalTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for Modal page")
     void performModalChecks() {
         LOG.debug("Clicking modal button to open modal window and verify that modal window is displayed");

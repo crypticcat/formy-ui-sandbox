@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.KEYPRESS_ENDPOINT;
 
 public class KeypressTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for Key and Mouse Press page")
     void testCopyAndPaste() {
         LOG.debug("Entering the value into Full name field");

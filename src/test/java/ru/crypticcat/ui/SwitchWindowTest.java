@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
@@ -9,6 +10,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.SWITCHWINDOW_ENDPOINT;
 
 public class SwitchWindowTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for alert on Switch Window page")
     void performAlertChecks() {
         LOG.debug("Finding the alert button and clicking it");
@@ -27,6 +29,7 @@ public class SwitchWindowTest extends BaseTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Perform checks for new tab on Switch Window page")
     void performNewTabChecks() {
         LOG.debug("Getting window handle and switching to new tab");

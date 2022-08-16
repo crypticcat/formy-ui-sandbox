@@ -1,5 +1,6 @@
 package ru.crypticcat.ui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.PAGESCROLL_ENDPOINT;
 
 public class ScrollTest extends BaseTest {
     @Test
+    @Disabled
     @DisplayName("Perform checks for Scroll page")
     void scrollIntoView() {
         LOG.debug("Scroll till Full Name and Date Fields");
