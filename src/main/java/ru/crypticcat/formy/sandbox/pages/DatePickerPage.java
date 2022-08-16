@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -36,15 +37,14 @@ public class DatePickerPage extends BasePage {
     @CacheLookup
     WebElement currentDayElem;
 
-    public DatePickerPage(String browser, int timeoutInSec) {
-        this(browser);
-        setDefaultTimeoutSec(timeoutInSec);
+    public DatePickerPage(Capabilities options) {
+        super(options);
+        PageFactory.initElements(driver, this);
     }
 
-    public DatePickerPage(String browser) {
-        super(browser);
-        PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + DATEPICKER_ENDPOINT);
+    public DatePickerPage(Capabilities options, int timeoutInSec) {
+        this(options);
+        setDefaultTimeoutSec(timeoutInSec);
     }
 
     public String getDatePickerAttr(String attrName) {

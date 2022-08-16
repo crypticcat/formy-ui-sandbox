@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -19,15 +20,14 @@ public class RadiobuttonsPage extends BasePage {
     @CacheLookup
     WebElement radio3;
 
-    public RadiobuttonsPage(String browser, int timeoutInSec) {
-        this(browser);
-        setDefaultTimeoutSec(timeoutInSec);
+    public RadiobuttonsPage(Capabilities options) {
+        super(options);
+        PageFactory.initElements(driver, this);
     }
 
-    public RadiobuttonsPage(String browser) {
-        super(browser);
-        PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + RADIOBUTTON_ENDPOINT);
+    public RadiobuttonsPage(Capabilities options, int timeoutInSec) {
+        this(options);
+        setDefaultTimeoutSec(timeoutInSec);
     }
 
     public void clickSecondRadio() {

@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
@@ -15,14 +16,13 @@ public class DragAndDropPage extends BasePage {
     @CacheLookup
     WebElement box;
 
-    public DragAndDropPage(String browser) {
-        super(browser);
+    public DragAndDropPage(Capabilities options) {
+        super(options);
         PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + DRAGDROP_ENDPOINT);
     }
 
-    public DragAndDropPage(String browser, int timeoutInSec) {
-        this(browser);
+    public DragAndDropPage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -19,14 +20,13 @@ public class CheckboxesPage extends BasePage {
     @CacheLookup
     WebElement checkbox3;
 
-    public CheckboxesPage(String browser) {
-        super(browser);
+    public CheckboxesPage(Capabilities options) {
+        super(options);
         PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + CHECKBOX_ENDPOINT);
     }
 
-    public CheckboxesPage(String browser, int timeoutInSec) {
-        this(browser);
+    public CheckboxesPage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

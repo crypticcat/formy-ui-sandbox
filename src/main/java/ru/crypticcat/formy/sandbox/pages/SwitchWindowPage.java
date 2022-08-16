@@ -1,6 +1,7 @@
 package ru.crypticcat.formy.sandbox.pages;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.support.CacheLookup;
@@ -16,15 +17,14 @@ public class SwitchWindowPage extends BasePage {
     @CacheLookup
     WebElement newTabButton;
 
-    public SwitchWindowPage(String browser, int timeoutInSec) {
-        this(browser);
-        setDefaultTimeoutSec(timeoutInSec);
+    public SwitchWindowPage(Capabilities options) {
+        super(options);
+        PageFactory.initElements(driver, this);
     }
 
-    public SwitchWindowPage(String browser) {
-        super(browser);
-        PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + SWITCHWINDOW_ENDPOINT);
+    public SwitchWindowPage(Capabilities options, int timeoutInSec) {
+        this(options);
+        setDefaultTimeoutSec(timeoutInSec);
     }
 
     public void clickAlertButton() {

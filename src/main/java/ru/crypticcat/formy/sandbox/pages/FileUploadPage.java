@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -18,14 +19,13 @@ public class FileUploadPage extends BasePage {
     @CacheLookup
     WebElement resetBtn;
 
-    public FileUploadPage(String browser) {
-        super(browser);
+    public FileUploadPage(Capabilities options) {
+        super(options);
         PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + FILEUPLOAD_ENDPOINT);
     }
 
-    public FileUploadPage(String browser, int timeoutInSec) {
-        this(browser);
+    public FileUploadPage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 
@@ -33,7 +33,7 @@ public class FileUploadPage extends BasePage {
         Path tempFile = Files.createTempFile("temp", ".tmp");
         String fileName = tempFile.toAbsolutePath().toString();
         //String shortFileName = String.valueOf(tempFile.getFileName());
-        logger.debug("Using temporal file {} in file uploading", fileName);
+        LOG.debug("Using temporal file {} in file uploading", fileName);
         chooseFileField.sendKeys(fileName);
         return fileName;
     }

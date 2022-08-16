@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
@@ -7,14 +8,13 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage {
 
-    public HomePage(String browser) {
-        super(browser);
+    public HomePage(Capabilities options) {
+        super(options);
         PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME);
     }
 
-    public HomePage(String browser, int timeoutInSec) {
-        this(browser);
+    public HomePage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

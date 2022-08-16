@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -15,16 +16,16 @@ public class DropdownPage extends BasePage {
     @CacheLookup
     WebElement firstOption;
 
-    public DropdownPage(String browser, int timeoutInSec) {
-        this(browser);
+    public DropdownPage(Capabilities options) {
+        super(options);
+        PageFactory.initElements(driver, this);
+    }
+
+    public DropdownPage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 
-    public DropdownPage(String browser) {
-        super(browser);
-        PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + DROPDOWN_ENDPOINT);
-    }
     public boolean isDropdownDisplayed() {
         return isDisplayed(ExpectedConditions.visibilityOf(dropdown));
     }

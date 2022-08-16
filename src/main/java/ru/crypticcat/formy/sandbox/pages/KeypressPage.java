@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -10,14 +11,13 @@ public class KeypressPage extends BasePage {
     @CacheLookup
     WebElement fullNameField;
 
-    public KeypressPage(String browser) {
-        super(browser);
+    public KeypressPage(Capabilities options) {
+        super(options);
         PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + KEYPRESS_ENDPOINT);
     }
 
-    public KeypressPage(String browser, int timeoutInSec) {
-        this(browser);
+    public KeypressPage(Capabilities options, int timeoutInSec) {
+        this(options);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

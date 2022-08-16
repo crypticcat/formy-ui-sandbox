@@ -1,5 +1,6 @@
 package ru.crypticcat.formy.sandbox.pages;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -20,15 +21,14 @@ public class ModalPage extends BasePage {
     @CacheLookup
     WebElement closeBtn;
 
-    public ModalPage(String browser, int timeoutInSec) {
-        this(browser);
-        setDefaultTimeoutSec(timeoutInSec);
+    public ModalPage(Capabilities options) {
+        super(options);
+        PageFactory.initElements(driver, this);
     }
 
-    public ModalPage(String browser) {
-        super(browser);
-        PageFactory.initElements(driver, this);
-        openPage(FORMY_HOME + MODAL_ENDPOINT);
+    public ModalPage(Capabilities options, int timeoutInSec) {
+        this(options);
+        setDefaultTimeoutSec(timeoutInSec);
     }
 
     public void clickModalBtn() {

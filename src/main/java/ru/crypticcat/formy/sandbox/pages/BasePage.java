@@ -3,6 +3,9 @@ package ru.crypticcat.formy.sandbox.pages;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.grid.Main;
+import org.openqa.selenium.net.PortProber;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,14 +18,15 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class BasePage {
+    protected static final Logger LOG = getLogger(lookup().lookupClass());
     //one more variant for soft assertions:
     //public List<Executable> ex = new ArrayList();
     long timeoutInSec = 5;
     Duration duration = Duration.ofSeconds(timeoutInSec);
     protected WebDriver driver;
-    public static final Logger logger = getLogger(lookup().lookupClass());
 
     WebDriverWait wait;
+
     public static final String FORMY_HOME = "https://formy-project.herokuapp.com/";
     public static final String CHECKBOX_ENDPOINT = "checkbox";
     public static final String DATEPICKER_ENDPOINT = "datepicker";
@@ -39,9 +43,23 @@ public class BasePage {
     public static final String RADIOBUTTON_ENDPOINT = "radiobutton";
     public static final String SWITCHWINDOW_ENDPOINT = "switch-window";
 
-    public BasePage(String browser) {
-        driver = WebDriverManager.getInstance(browser).create();
+    public BasePage(Capabilities options) {
+        driver = getDriver(options);
         wait = new WebDriverWait(driver, duration);
+    }
+    public static void setupGrid(String browser) {
+        int port = PortProber.findFreePort();
+        WebDriverManager.getInstance(browser).setup();
+        Main.main(
+                new String[] { "standalone", "--port", String.valueOf(port) });
+
+        System.setProperty("webdriver.remote.server",
+                String.format("http://localhost:%d/", port));
+    }
+
+    WebDriver getDriver(Capabilities options) {
+        driver = new RemoteWebDriver(options);
+        return driver;
     }
 
     public void setDefaultTimeoutSec(int timeoutInSec) {
@@ -50,6 +68,10 @@ public class BasePage {
 
     public void openPage(String url) {
         driver.get(url);
+    }
+
+    public void navigateTo(String url) {
+        driver.navigate().to(url);
     }
 
     public WebElement findElemBy(By locator) {
@@ -100,7 +122,7 @@ public class BasePage {
         try {
             wait.until(expectedCondition);
         } catch (TimeoutException e) {
-            logger.warn("Timeout of {} seconds for element ", timeoutInSec);
+            LOG.warn("Timeout of {} seconds for element ", timeoutInSec);
             return false;
         }
         return true;
@@ -112,7 +134,7 @@ public class BasePage {
         try {
             screenshot = ts.getScreenshotAs(OutputType.BASE64);
         } catch (Exception e) {
-            logger.warn("Timeout of {} seconds for element ", timeoutInSec);
+            LOG.warn("Timeout of {} seconds for element ", timeoutInSec);
         }
         return screenshot;
     }
@@ -127,7 +149,7 @@ public class BasePage {
         return options.getCookieNamed(cookieName);
     }
 
-    public Window manageWindow(){
+    public Window manageWindow() {
         return driver.manage().window();
     }
 
