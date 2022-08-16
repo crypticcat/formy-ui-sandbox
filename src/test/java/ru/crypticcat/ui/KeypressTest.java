@@ -1,39 +1,23 @@
 package ru.crypticcat.ui;
 
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.crypticcat.formy.sandbox.pages.BasePage;
-import ru.crypticcat.formy.sandbox.pages.KeypressPage;
 
-public class KeypressTest {
+import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.KEYPRESS_ENDPOINT;
 
-    SoftAssertions softAssert = new SoftAssertions();
-
-    KeypressPage keypressPage;
-
-    @BeforeEach
-    void setup() {
-        keypressPage = new KeypressPage("chrome");
-    }
-
-    @AfterEach
-    public void teardown() {
-        keypressPage.quit();
-    }
-
+public class KeypressTest extends BaseTest {
     @Test
+    @DisplayName("Perform checks for Key and Mouse Press page")
     void testCopyAndPaste() {
-        BasePage.logger.debug("Entering the value into Full name field");
+        LOG.debug("Entering the value into Full name field");
+        keypressPage.openPage(FORMY_HOME + KEYPRESS_ENDPOINT);
         String valueToEnter = "Meow";
         keypressPage.enterValueIntoNameField(valueToEnter);
         softAssert.assertThat(keypressPage.getFullNameFieldValue()).isEqualTo(valueToEnter);
 
-        BasePage.logger.debug("Clearing the value in Full name field");
+        LOG.debug("Clearing the value in Full name field");
         keypressPage.clearFullNameField();
         softAssert.assertThat(keypressPage.getFullNameFieldValue()).isEmpty();
-
-        softAssert.assertAll();
     }
 }

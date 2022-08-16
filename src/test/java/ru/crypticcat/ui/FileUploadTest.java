@@ -1,35 +1,22 @@
 package ru.crypticcat.ui;
 
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.crypticcat.formy.sandbox.pages.BasePage;
-import ru.crypticcat.formy.sandbox.pages.FileUploadPage;
 
 import java.io.IOException;
 
-public class FileUploadTest {
-    SoftAssertions softAssert = new SoftAssertions();
+import static ru.crypticcat.formy.sandbox.pages.BasePage.FILEUPLOAD_ENDPOINT;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
-    FileUploadPage fileUploadPage;
-
-    @BeforeEach
-    void setup() {
-        fileUploadPage = new FileUploadPage("chrome");
-    }
-
-    @AfterEach
-    public void teardown() {
-        fileUploadPage.quit();
-    }
-
+public class FileUploadTest extends BaseTest {
     @Test
+    @DisplayName("Perform checks for File Upload page")
     void performFileUpload() throws IOException {
-        BasePage.logger.debug("Creating temporal file anf uploading it");
+        LOG.debug("Creating temporal file anf uploading it");
+        fileUploadPage.openPage(FORMY_HOME + FILEUPLOAD_ENDPOINT);
         String fileName = fileUploadPage.uploadFile();
         softAssert.assertThat(fileUploadPage.isFileNameDisplayed(fileName))
-                        .withFailMessage("File name is not displayed, should be %s", fileName)
+                .withFailMessage("File name is not displayed, should be %s", fileName)
                 .isTrue();
 
         softAssert.assertThat(fileUploadPage.getFileUploadFieldAtr("value"))
@@ -37,12 +24,10 @@ public class FileUploadTest {
                         fileUploadPage.getFileUploadFieldAtr("value"))
                 .isEqualTo(fileName);
 
-        BasePage.logger.debug("Resetting uploaded file");
+        LOG.debug("Resetting uploaded file");
         fileUploadPage.resetUploadedFile();
         softAssert.assertThat(fileUploadPage.isFileNameDisplayed(fileName))
                 .withFailMessage("File name %s is still present in File Upload field", fileName)
                 .isFalse();
-
-        softAssert.assertAll();
     }
 }

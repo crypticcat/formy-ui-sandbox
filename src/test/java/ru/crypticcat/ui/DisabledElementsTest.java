@@ -1,36 +1,23 @@
 package ru.crypticcat.ui;
 
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.crypticcat.formy.sandbox.pages.BasePage;
-import ru.crypticcat.formy.sandbox.pages.DisabledEnabledPage;
 
-public class DisabledElementsTest {
-    SoftAssertions softAssert = new SoftAssertions();
-    DisabledEnabledPage disabledEnabledPage;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.ENABLED_ENDPOINT;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
-    @BeforeEach
-    void setup() {
-        disabledEnabledPage = new DisabledEnabledPage("chrome");
-    }
-
-    @AfterEach
-    public void teardown() {
-        disabledEnabledPage.quit();
-    }
-
+public class DisabledElementsTest extends BaseTest {
     @Test
+    @DisplayName("Perform checks for Enabled and disabled elements page")
     void performCheckForDisabledEnabled() {
-        BasePage.logger.debug("Find the disabled element and check it is not enabled");
+        LOG.debug("Finding the disabled element and checking it is not enabled");
+        disabledEnabledPage.openPage(FORMY_HOME+ENABLED_ENDPOINT);
         softAssert.assertThat(disabledEnabledPage.isFirstElemEnabled())
                 .withFailMessage("Element should not be enabled").isFalse();
 
-        BasePage.logger.debug("Find the enabled element and check it is enabled");
+        LOG.debug("Find the enabled element and check it is enabled");
         softAssert.assertThat(disabledEnabledPage.isSecondElemEnabled())
                 .withFailMessage("Element should be enabled").isTrue();
 
-        softAssert.assertAll();
     }
 }

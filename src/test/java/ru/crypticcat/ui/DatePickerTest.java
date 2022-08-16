@@ -1,39 +1,28 @@
 package ru.crypticcat.ui;
 
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.crypticcat.formy.sandbox.pages.BasePage;
-import ru.crypticcat.formy.sandbox.pages.DatePickerPage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DatePickerTest {
-    SoftAssertions softAssert = new SoftAssertions();
-    DatePickerPage datePickerPage;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.DATEPICKER_ENDPOINT;
+import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
+
+public class DatePickerTest extends BaseTest {
     public LocalDate today = LocalDate.now();
 
-    @BeforeEach
-    void setup() {
-        datePickerPage = new DatePickerPage("chrome");
-    }
-
-    @AfterEach
-    public void teardown() {
-        datePickerPage.quit();
-    }
-
     @Test
+    @DisplayName("Perform checks for Datepicker page")
     void performDatePickerChecks() {
-        BasePage.logger.debug("Verifying the placeholder is displayed in the date picker field");
+        LOG.debug("Verifying the placeholder is displayed in the date picker field");
+        datePickerPage.openPage(FORMY_HOME + DATEPICKER_ENDPOINT);
         String datePickerPlaceholder = datePickerPage.getDatePickerAttr("placeholder");
         softAssert.assertThat(datePickerPlaceholder)
                 .withFailMessage("Placeholder includes: %s", datePickerPlaceholder)
                 .isEqualTo("mm/dd/yyyy");
 
-        BasePage.logger.debug("Opening the calendar; verifying that the current year is displayed");
+        LOG.debug("Opening the calendar; verifying that the current year is displayed");
         int currentYear = today.getYear();
         datePickerPage.clickDatePicker();
         softAssert.assertThat(datePickerPage.isDatePickerSwitchDisplayed())
@@ -44,10 +33,10 @@ public class DatePickerTest {
                         datePickerPage.getDatePickerSwitchText())
                 .contains(String.valueOf(currentYear));
 
-        BasePage.logger.debug("Selecting the previous year date");
+        LOG.debug("Selecting the previous year date");
         datePickerPage.selectPrevYearDateInCalendar();
 
-        BasePage.logger.debug("Getting the final date from the input text and performing checks");
+        LOG.debug("Getting the final date from the input text and performing checks");
         LocalDate previousYear = today.minusYears(1);
         String prevYearDate = datePickerPage.getDatePickerAttr("value");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -56,7 +45,5 @@ public class DatePickerTest {
                 .withFailMessage("Actual date %s is not equal to the expected date %s",
                         prevYearDate, expectedDate)
                 .isEqualTo(expectedDate);
-
-        softAssert.assertAll();
     }
 }
