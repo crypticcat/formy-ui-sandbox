@@ -12,7 +12,8 @@
         <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.11</logback.version>
 
-        <selenium.version>4.3.0</selenium.version>
+        <selenium.version>4.4.0</selenium.version>
+        <selenium-grid.version>4.4.0</selenium-grid.version>
         <junit5.version>5.9.0-M1</junit5.version>
         <allure-junit5.version>2.19.0</allure-junit5.version>
         <assertj.version>3.23.1</assertj.version>
@@ -41,6 +42,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-grid</artifactId>
+            <version>${selenium-grid.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -73,7 +79,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <testFailureIgnore>false</testFailureIgnore>
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>
