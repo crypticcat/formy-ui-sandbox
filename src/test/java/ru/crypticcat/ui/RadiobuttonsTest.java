@@ -1,17 +1,33 @@
 package ru.crypticcat.ui;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import io.github.artsok.RepeatedIfExceptionsTest;
+import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import ru.crypticcat.formy.sandbox.pages.RadiobuttonsPage;
 
 import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 import static ru.crypticcat.formy.sandbox.pages.BasePage.RADIOBUTTON_ENDPOINT;
 
 public class RadiobuttonsTest extends BaseTest {
-    @Test
-    @Disabled
-    @DisplayName("Perform checks for Radiobuttons page")
+    private static RadiobuttonsPage radiobuttonsPage;
+
+    @BeforeEach
+    void setup() {
+        radiobuttonsPage = new RadiobuttonsPage(CHROME_CONTAINER);
+    }
+
+    @AfterEach
+    void teardown() {
+        radiobuttonsPage.quit();
+    }
+
+    @RepeatedIfExceptionsTest(repeats = 3)
+    @Description("Perform checks for Radiobuttons page")
     void performRadiosChecks() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Find the first radiobutton and check it is selected");
         radiobuttonsPage.openPage(FORMY_HOME + RADIOBUTTON_ENDPOINT);
         softAssert.assertThat(radiobuttonsPage.getDomAttrForFirstRadio("id"))
@@ -39,5 +55,7 @@ public class RadiobuttonsTest extends BaseTest {
                 .withFailMessage("The first radiobutton should be unselected").isFalse();
         softAssert.assertThat(radiobuttonsPage.isThirdRadioSelected())
                 .withFailMessage("The third radiobutton should not be selected").isFalse();
+
+        softAssert.assertAll();
     }
 }

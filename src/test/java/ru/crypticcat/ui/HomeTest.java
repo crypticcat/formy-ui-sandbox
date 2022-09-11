@@ -1,27 +1,43 @@
 package ru.crypticcat.ui;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
+import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver.Window;
 import org.openqa.selenium.remote.SessionId;
+import ru.crypticcat.formy.sandbox.pages.CheckboxesPage;
+import ru.crypticcat.formy.sandbox.pages.HomePage;
 
 import java.util.Set;
 
 import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
 public class HomeTest extends BaseTest {
+    private static HomePage homePage;
+
+    @BeforeEach
+    void setup() {
+        homePage = new HomePage(CHROME_CONTAINER);
+    }
+
+    @AfterEach
+    void teardown() {
+        homePage.quit();
+    }
     private static final String FORMY_DOMAIN = "formy-project.herokuapp.com";
     private static final String FORMY_NAME = "Formy";
     private static final String FORMY_WELCOME = "Welcome to Formy";
 
-    @Test
-    @Disabled
-    @DisplayName("Perform basic checks for Home page")
+    @Test()
+    @Description("Perform basic checks for Home page")
     void performBasicChecks() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Performing basic checks");
         homePage.openPage(FORMY_HOME);
         softAssert.assertThat(homePage.getTitle())
@@ -33,21 +49,28 @@ public class HomeTest extends BaseTest {
         softAssert.assertThat(homePage.getPageSource())
                 .withFailMessage("Page source does not contain specified words")
                 .containsIgnoringCase(FORMY_WELCOME);
+
+        softAssert.assertAll();
     }
 
     @Test
-    @DisplayName("Perform sessionId checks for Home page")
+    @Description("Perform sessionId checks for Home page")
     void performSessionIdCheck() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Performing session id checks");
         SessionId sessionId = homePage.getSessionId();
         softAssert.assertThat(sessionId)
                 .withFailMessage("Session id is null").isNotNull();
+
+        softAssert.assertAll();
     }
 
     @Test
-    @Disabled
-    @DisplayName("Perform cookies checks for Home page")
+    @Description("Perform cookies checks for Home page")
     void performCookiesChecks() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Reading cookies on the page");
         int expectedCookiesSize = 1;
         Set<Cookie> cookies = homePage.readCookie();
@@ -66,14 +89,17 @@ public class HomeTest extends BaseTest {
         softAssert.assertThat(cookie.getDomain())
                 .withFailMessage("The actual domain was %s", cookie.getDomain())
                 .isEqualTo(FORMY_DOMAIN);
+
+        softAssert.assertAll();
     }
 
     @Test
-    @Disabled
-    @DisplayName("Perform maximize window checks for Home page")
+    @Description("Perform maximize window checks for Home page")
     void testMaximizeWindow() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Getting window object, its position and size");
-        Window window = basePage.manageWindow();
+        Window window = homePage.manageWindow();
         Point initialPosition = window.getPosition();
         Dimension initialSize = window.getSize();
         LOG.debug("Initial window: position {} -- size {}", initialPosition, initialSize);
@@ -86,5 +112,7 @@ public class HomeTest extends BaseTest {
 
         softAssert.assertThat(initialPosition).isNotEqualTo(maximizedPosition);
         softAssert.assertThat(initialSize).isNotEqualTo(maximizedSize);
+
+        softAssert.assertAll();
     }
 }

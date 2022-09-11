@@ -1,8 +1,11 @@
 package ru.crypticcat.ui;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import io.github.artsok.RepeatedIfExceptionsTest;
+import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import ru.crypticcat.formy.sandbox.pages.DatePickerPage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,10 +16,23 @@ import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 public class DatePickerTest extends BaseTest {
     public LocalDate today = LocalDate.now();
 
-    @Test
-    @Disabled
-    @DisplayName("Perform checks for Datepicker page")
+    private static DatePickerPage datePickerPage;
+
+    @BeforeEach
+    void setup() {
+        datePickerPage = new DatePickerPage(CHROME_CONTAINER);
+    }
+
+    @AfterEach
+    void teardown() {
+        datePickerPage.quit();
+    }
+
+    @RepeatedIfExceptionsTest(repeats = 3)
+    @Description("Perform checks for Datepicker page")
     void performDatePickerChecks() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Verifying the placeholder is displayed in the date picker field");
         datePickerPage.openPage(FORMY_HOME + DATEPICKER_ENDPOINT);
         String datePickerPlaceholder = datePickerPage.getDatePickerAttr("placeholder");
@@ -47,5 +63,7 @@ public class DatePickerTest extends BaseTest {
                 .withFailMessage("Actual date %s is not equal to the expected date %s",
                         prevYearDate, expectedDate)
                 .isEqualTo(expectedDate);
+
+        softAssert.assertAll();
     }
 }

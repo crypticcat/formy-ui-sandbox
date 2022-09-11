@@ -1,16 +1,32 @@
 package ru.crypticcat.ui;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import io.github.artsok.RepeatedIfExceptionsTest;
+import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.*;
+import ru.crypticcat.formy.sandbox.pages.CheckboxesPage;
 
 import static ru.crypticcat.formy.sandbox.pages.BasePage.CHECKBOX_ENDPOINT;
 import static ru.crypticcat.formy.sandbox.pages.BasePage.FORMY_HOME;
 
 public class CheckboxesTest extends BaseTest {
+    private static CheckboxesPage checkboxesPage;
 
-    @Test
-    @DisplayName("Perform checks for Checkbox page")
+    @BeforeEach
+    void setup() {
+        checkboxesPage = new CheckboxesPage(CHROME_CONTAINER);
+    }
+
+    @AfterEach
+    void teardown() {
+        checkboxesPage.quit();
+    }
+
+    @RepeatedIfExceptionsTest(repeats = 3)
+    @Description("Perform checks for Checkbox page")
     void performCheckboxesCheck() {
+        SoftAssertions softAssert = new SoftAssertions();
+
         LOG.debug("Searching for the first checkbox and check it is not selected");
         checkboxesPage.openPage(FORMY_HOME + CHECKBOX_ENDPOINT);
         softAssert.assertThat(checkboxesPage.isFirstCheckboxSelected())
@@ -35,5 +51,7 @@ public class CheckboxesTest extends BaseTest {
         checkboxesPage.clickThirdCheckbox();
         softAssert.assertThat(checkboxesPage.isThirdCheckboxSelected())
                 .withFailMessage("The third checkbox should be unselected").isFalse();
+
+        softAssert.assertAll();
     }
 }
