@@ -1,10 +1,10 @@
 package ru.crypticcat.formy.sandbox.pages;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 
 public class DisabledEnabledPage extends BasePage {
 
@@ -16,21 +16,21 @@ public class DisabledEnabledPage extends BasePage {
     @CacheLookup
     WebElement secondElem;
 
-    public DisabledEnabledPage(Capabilities options) {
-        super(options);
+    public DisabledEnabledPage(BrowserWebDriverContainer webDriverContainer) {
+        super(webDriverContainer);
         PageFactory.initElements(driver, this);
     }
 
-    public DisabledEnabledPage(Capabilities options, int timeoutInSec) {
-        this(options);
+    public DisabledEnabledPage(BrowserWebDriverContainer webDriverContainer, int timeoutInSec) {
+        this(webDriverContainer);
         setDefaultTimeoutSec(timeoutInSec);
     }
 
-    public boolean isFirstElemEnabled(){
+    public boolean isFirstElemEnabled() {
         return firstElem.isEnabled();
     }
 
-    public boolean isSecondElemEnabled(){
+    public boolean isSecondElemEnabled() {
         return secondElem.isEnabled();
     }
 }

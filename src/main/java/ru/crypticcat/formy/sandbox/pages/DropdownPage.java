@@ -1,11 +1,11 @@
 package ru.crypticcat.formy.sandbox.pages;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 
 public class DropdownPage extends BasePage {
     @FindBy(xpath = "//button[@id='dropdownMenuButton']")
@@ -16,13 +16,13 @@ public class DropdownPage extends BasePage {
     @CacheLookup
     WebElement firstOption;
 
-    public DropdownPage(Capabilities options) {
-        super(options);
+    public DropdownPage(BrowserWebDriverContainer webDriverContainer) {
+        super(webDriverContainer);
         PageFactory.initElements(driver, this);
     }
 
-    public DropdownPage(Capabilities options, int timeoutInSec) {
-        this(options);
+    public DropdownPage(BrowserWebDriverContainer webDriverContainer, int timeoutInSec) {
+        this(webDriverContainer);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

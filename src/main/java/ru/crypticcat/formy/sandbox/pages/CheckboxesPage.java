@@ -1,10 +1,10 @@
 package ru.crypticcat.formy.sandbox.pages;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 
 public class CheckboxesPage extends BasePage {
     //example how to find elements by advanced XPATH
@@ -20,13 +20,13 @@ public class CheckboxesPage extends BasePage {
     @CacheLookup
     WebElement checkbox3;
 
-    public CheckboxesPage(Capabilities options) {
-        super(options);
+    public CheckboxesPage(BrowserWebDriverContainer webDriverContainer) {
+        super(webDriverContainer);
         PageFactory.initElements(driver, this);
     }
 
-    public CheckboxesPage(Capabilities options, int timeoutInSec) {
-        this(options);
+    public CheckboxesPage(BrowserWebDriverContainer webDriverContainer, int timeoutInSec) {
+        this(webDriverContainer);
         setDefaultTimeoutSec(timeoutInSec);
     }
 

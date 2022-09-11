@@ -1,15 +1,13 @@
 package ru.crypticcat.formy.sandbox.pages;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver.Window;
-import org.openqa.selenium.grid.Main;
-import org.openqa.selenium.net.PortProber;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 
 import java.time.Duration;
 import java.util.Set;
@@ -23,7 +21,7 @@ public class BasePage {
     //public List<Executable> ex = new ArrayList();
     long timeoutInSec = 5;
     Duration duration = Duration.ofSeconds(timeoutInSec);
-    protected WebDriver driver;
+    protected RemoteWebDriver driver;
 
     WebDriverWait wait;
 
@@ -43,23 +41,9 @@ public class BasePage {
     public static final String RADIOBUTTON_ENDPOINT = "radiobutton";
     public static final String SWITCHWINDOW_ENDPOINT = "switch-window";
 
-    public BasePage(Capabilities options) {
-        driver = getDriver(options);
+    public BasePage(BrowserWebDriverContainer webDriverContainer) {
+        driver = webDriverContainer.getWebDriver();
         wait = new WebDriverWait(driver, duration);
-    }
-    public static void setupGrid(String browser) {
-        int port = PortProber.findFreePort();
-        WebDriverManager.getInstance(browser).setup();
-        Main.main(
-                new String[] { "standalone", "--port", String.valueOf(port) });
-
-        System.setProperty("webdriver.remote.server",
-                String.format("http://localhost:%d/", port));
-    }
-
-    WebDriver getDriver(Capabilities options) {
-        driver = new RemoteWebDriver(options);
-        return driver;
     }
 
     public void setDefaultTimeoutSec(int timeoutInSec) {
